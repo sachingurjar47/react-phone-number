@@ -1,5 +1,7 @@
+import { CountryCode } from "libphonenumber-js";
+
 export interface Country {
-  country: string;
+  country: CountryCode;
   callingCode: string;
   title: string;
   icon: string;

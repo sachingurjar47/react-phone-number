@@ -19,3 +19,9 @@ export const getCountries = ({ local }: GetCountriesProps = {}): Country[] => {
 
   return countries ?? [];
 };
+
+export const getCountry = (code: string | number) => {
+  return getCountries()?.find(
+    (country) => country?.callingCode === String(code)
+  )?.country;
+};
