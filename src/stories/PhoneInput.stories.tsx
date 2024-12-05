@@ -7,30 +7,36 @@ export default {
 };
 
 export const Default = () => {
-  const [value, setValue] = useState("+918109126719");
+  const [value, setValue] = useState("+918");
   const [valueObj, setValueObj] = useState({
     callingCode: "91",
-    number: "8770786508",
+    number: "8",
   });
   const onChangeCountry = (e: any, j: any) => {
-    console.log(e, j);
+    // console.log("onChangeCountry", e, j);
   };
   const onChangeNumber = (n: any) => {
-    console.log(n);
+    // console.log("onChangeNumber", n);
   };
+  const onChange = (e: any, j: any) => {
+    // console.log("onChange", e, j);
+    typeof e === "string" ? setValue(e) : setValueObj(e);
+  };
+  console.log(value);
+
   return (
     <>
       <PhoneNumber
         value={value}
         onChangeNumber={onChangeNumber}
         onChangeCountry={onChangeCountry}
-        onChange={(e: any) => setValue(e)}
+        onChange={onChange}
       />
       <PhoneNumber
         value={valueObj}
         onChangeNumber={onChangeNumber}
         onChangeCountry={onChangeCountry}
-        onChange={(e: any) => setValueObj(e)}
+        onChange={onChange}
       />
     </>
   );

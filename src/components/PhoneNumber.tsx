@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createStyles } from "antd-style";
 import { getCountries } from "../countries";
 import {
-  usePhoneInput,
+  usePhoneNumberInput,
   UsePhoneNumberInputProps,
 } from "../utils/usePhoneNumberInput";
 import { Language } from "../types/types";
@@ -38,34 +38,20 @@ type Props = UsePhoneNumberInputProps & {
 };
 
 const PhoneNumber: React.FC<Props> = ({ local, ...rest }) => {
-  const inputRef = useRef<any>(null);
-  const { number, country, onChangeCountry, onChangeNumber } = usePhoneInput({
-    ...rest,
-  } as any);
-  const [inputWidth, setInputWidth] = useState<number>(70);
-  useEffect(() => {
-    if (inputRef?.current?.input?.clientWidth) {
-      setInputWidth(inputRef.current.input.clientWidth);
-    }
-  }, []);
-  const { styles } = useMemo(
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    () => useStyles({ width: inputWidth }),
-    [inputWidth]
-  );
-  // console.log(data, number);
+  const { number, country, onChangeCountry, onChangeNumber } =
+    usePhoneNumberInput({
+      ...rest,
+    } as any);
 
   return (
     <div>
       <Input
         value={number}
         onChange={(e) => onChangeNumber(e.target.value)}
-        ref={inputRef}
         addonBefore={
           <Select
             value={country}
             className="name"
-            popupClassName={styles.popupClass}
             style={{ width: 70 }}
             onChange={(value) => onChangeCountry(value)}
           >
