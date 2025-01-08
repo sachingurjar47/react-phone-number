@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Country } from "../types/types";
 import {
   AsYouType,
@@ -15,8 +15,8 @@ interface PropsString {
   defaultCountry?: CountryCode;
 }
 
-interface PropsObject {
-  value?: Partial<Omit<Country, "icon" | "title">> & { number?: string };
+export interface PropsObject {
+  value?: Omit<Country, "icon" | "title"> & { number?: string };
   onChange?: (value: PropsObject["value"], str?: PropsString["value"]) => void;
   onChangeNumber?: (number: string) => void;
   onChangeCountry?: (country: CountryCode, code: string) => void;
@@ -37,7 +37,7 @@ type ReturnValue<T extends UsePhoneNumberInputProps> = T extends PropsString
     }
   : T extends PropsObject
   ? {
-      value?: Partial<Omit<Country, "icon" | "title">> & { number?: string };
+      value?: Omit<Country, "icon" | "title"> & { number?: string };
       country: CountryCode;
       callingCode: string;
       number: string;
@@ -49,37 +49,51 @@ type ReturnValue<T extends UsePhoneNumberInputProps> = T extends PropsString
 export const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
   {
     value,
-    defaultCountry,
+    defaultCountry = "US",
     onChange,
     onChangeCountry: onChangeCountryProps,
     onChangeNumber: onChangeNumberProps,
   }: T = {} as T
 ): ReturnValue<T> => {
-  const asYouType = new AsYouType(
-    typeof value === "string"
-      ? undefined
-      : getCountry(value?.callingCode!) ?? defaultCountry
-  );
-  const num = asYouType.input(
-    typeof value === "string" ? value : value?.number ?? ""
-  );
-  const phoneNumber = asYouType.getNumber();
+  const asYouType = useMemo(() => {
+    return new AsYouType(
+      typeof value === "string" ? undefined : value?.country ?? defaultCountry
+    );
+  }, [value, defaultCountry]);
 
-  const country =
-    phoneNumber?.country ??
-    (typeof value === "string"
-      ? getCountry(num.replace("+", ""))
-      : getCountry(value?.callingCode!) ?? defaultCountry);
-  const callingCode =
-    phoneNumber?.countryCallingCode ??
-    (typeof value === "string"
-      ? num.replace("+", "")
-      : getCountryCallingCode(country!));
-  const number = phoneNumber?.nationalNumber ?? "";
+  const num = useMemo(
+    () =>
+      asYouType.input(typeof value === "string" ? value : value?.number ?? ""),
+    [value, asYouType]
+  );
+  console.log(asYouType);
+
+  const phoneNumber = useMemo(() => asYouType.getNumber(), [asYouType]);
+  // @ts-ignore
+  const country: CountryCode = useMemo(() => {
+    return (
+      phoneNumber?.country ??
+      (typeof value === "string"
+        ? getCountry(num.replace("+", ""))
+        : getCountry(value?.callingCode!) ?? defaultCountry)
+    );
+  }, [phoneNumber, value, num, defaultCountry]);
+
+  const callingCode = useMemo(() => {
+    return (
+      phoneNumber?.countryCallingCode ??
+      (typeof value === "string"
+        ? num.replace("+", "")
+        : getCountryCallingCode(country!))
+    );
+  }, [phoneNumber, value, num, country]);
+
+  const number = useMemo(
+    () => phoneNumber?.nationalNumber ?? "",
+    [phoneNumber]
+  );
 
   const res: PropsObject["value"] = { country, callingCode, number };
-
-  console.log(phoneNumber, num, res);
   const newValue: UsePhoneNumberInputProps["value"] =
     typeof value === "string" ? number : { ...res };
 
@@ -88,27 +102,26 @@ export const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
     number?: string,
     valueForString?: string
   ) => {
-    const callingCode = getCountryCallingCode(newCountry!) as any;
-    onChangeCountryProps?.(newCountry!, callingCode!);
+    const callingCode = getCountryCallingCode(newCountry!) as string;
+    onChangeCountryProps?.(newCountry!, callingCode);
     onChange?.(
+      // @ts-ignore
       typeof value === "string"
         ? valueForString!
-        : ({ country: newCountry, callingCode, number } as any),
+        : { country: newCountry, callingCode, number },
       typeof value === "string"
-        ? ({ country: newCountry, callingCode, number } as any)
+        ? { country: newCountry, callingCode, number }
         : valueForString
     );
   };
 
   const onChangeCountry = (country: CountryCode) => {
-    const callingCode = getCountryCallingCode(country!) as any;
+    const callingCode = getCountryCallingCode(country);
     const valueForString = `+${callingCode}${number}`;
     handleChange(country, number!, valueForString);
   };
 
   const onChangeNumber = (number: string) => {
-    if (phoneNumber?.isPossible()) {
-    }
     const sanitizedNumber = number.replace(/[^0-9]/g, "");
     onChangeNumberProps?.(sanitizedNumber);
     const valueForString = `+${callingCode}${sanitizedNumber}`;

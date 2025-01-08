@@ -10,13 +10,11 @@ import {
 import { Language } from "../types/types";
 import parsePhoneNumber, { CountryCode } from "libphonenumber-js";
 
-const useStyles = createStyles(
-  ({ token, css, cx }, { width = 70 }: { width?: number }) => ({
-    popupClass: {
-      width: `${width + 70}px !important`,
-    },
-  })
-);
+const useStyles = createStyles(({ token, css, cx }) => ({
+  popupClass: {
+    width: `200px !important`,
+  },
+}));
 const number = parsePhoneNumber("8109126719", "IN");
 
 const data = {
@@ -30,7 +28,6 @@ const data = {
   getPossibleCountries: number?.getPossibleCountries(),
   type: number?.getType() || "—",
   possible: number?.isPossible(),
-
   valid: number?.isValid(),
 };
 type Props = UsePhoneNumberInputProps & {
@@ -38,6 +35,7 @@ type Props = UsePhoneNumberInputProps & {
 };
 
 const PhoneNumber: React.FC<Props> = ({ local, ...rest }) => {
+  const { styles } = useStyles();
   const { number, country, onChangeCountry, onChangeNumber } =
     usePhoneNumberInput({
       ...rest,
@@ -53,7 +51,12 @@ const PhoneNumber: React.FC<Props> = ({ local, ...rest }) => {
             value={country}
             className="name"
             style={{ width: 70 }}
-            onChange={(value) => onChangeCountry(value)}
+            onChange={(value) => {
+              console.log({ value });
+
+              onChangeCountry(value);
+            }}
+            popupClassName={styles.popupClass}
           >
             {getCountries({ local }).map(
               ({ callingCode, country, icon, title }) => (

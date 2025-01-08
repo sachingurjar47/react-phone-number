@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PhoneNumber from "../components/PhoneNumber";
+import { Country } from "../types/types";
+import { PropsObject } from "../utils/usePhoneNumberInput";
 
 export default {
   title: "PhoneNumber",
@@ -8,9 +10,9 @@ export default {
 
 export const Default = () => {
   const [value, setValue] = useState("+918");
-  const [valueObj, setValueObj] = useState({
-    callingCode: "91",
+  const [valueObj, setValueObj] = useState<PropsObject["value"]>({
     number: "8",
+    country: "IN",
   });
   const onChangeCountry = (e: any, j: any) => {
     // console.log("onChangeCountry", e, j);
@@ -19,19 +21,19 @@ export const Default = () => {
     // console.log("onChangeNumber", n);
   };
   const onChange = (e: any, j: any) => {
-    // console.log("onChange", e, j);
+    console.log("onChange", e, j);
     typeof e === "string" ? setValue(e) : setValueObj(e);
   };
-  console.log(value);
+  // console.log(valueObj);
 
   return (
     <>
-      <PhoneNumber
+      {/* <PhoneNumber
         value={value}
         onChangeNumber={onChangeNumber}
         onChangeCountry={onChangeCountry}
         onChange={onChange}
-      />
+      /> */}
       <PhoneNumber
         value={valueObj}
         onChangeNumber={onChangeNumber}

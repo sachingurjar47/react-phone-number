@@ -2,7 +2,7 @@ import { CountryCode } from "libphonenumber-js";
 
 export interface Country {
   country: CountryCode;
-  callingCode: string;
+  callingCode?: string;
   title: string;
   icon: string;
 }
