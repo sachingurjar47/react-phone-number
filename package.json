@@ -1,39 +1,29 @@
 {
   "name": "react-phone-number",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.0",
+  "private": false,
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "sb": "storybook dev -p 6006",
+    "go": "npm run build && npm version patch && npm publish",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "47",
+  "license": "MIT",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.121",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "antd": "^5.22.3",
     "antd-style": "^3.7.1",
     "country-flag-icons": "^1.5.13",
     "libphonenumber-js": "^1.11.15",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "sb": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:storybook/recommended"
-    ]
+    "react-dom": "^18.3.1"
   },
   "browserslist": {
     "production": [
@@ -48,18 +38,20 @@
     ]
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.2",
-    "@storybook/addon-essentials": "^8.4.6",
-    "@storybook/addon-interactions": "^8.4.6",
-    "@storybook/addon-onboarding": "^8.4.6",
-    "@storybook/blocks": "^8.4.6",
-    "@storybook/preset-create-react-app": "^8.4.6",
-    "@storybook/react": "^8.4.6",
-    "@storybook/react-webpack5": "^8.4.6",
-    "@storybook/test": "^8.4.6",
-    "eslint-plugin-storybook": "^0.11.1",
+    "@chromatic-com/storybook": "^3.2.3",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/addon-webpack5-compiler-swc": "^2.0.0",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-webpack5": "^8.4.7",
+    "@storybook/test": "^8.4.7",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "parcel": "^2.13.3",
     "prop-types": "^15.8.1",
-    "storybook": "^8.4.6",
-    "webpack": "^5.96.1"
+    "storybook": "^8.4.7",
+    "typescript": "5.7.3"
   }
 }

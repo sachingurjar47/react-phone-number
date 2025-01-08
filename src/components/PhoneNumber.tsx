@@ -3,8 +3,7 @@ import { Option } from "antd/es/mentions";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createStyles } from "antd-style";
 import { getCountries } from "../countries";
-import {
-  usePhoneNumberInput,
+import usePhoneNumberInput, {
   UsePhoneNumberInputProps,
 } from "../utils/usePhoneNumberInput";
 import { Language } from "../types/types";

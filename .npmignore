@@ -1,0 +1,6 @@
+src
+node_modules
+.storybook
+.parcelignore
+package-lock.json
+.parcel-cache

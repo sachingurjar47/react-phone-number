@@ -46,7 +46,7 @@ type ReturnValue<T extends UsePhoneNumberInputProps> = T extends PropsString
     }
   : never;
 
-export const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
+const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
   {
     value,
     defaultCountry = "US",
@@ -135,3 +135,4 @@ export const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
     ...res,
   } as ReturnValue<T>;
 };
+export default usePhoneNumberInput;
