@@ -50,6 +50,7 @@
     "@storybook/react": "^8.4.7",
     "@storybook/react-webpack5": "^8.4.7",
     "@storybook/test": "^8.4.7",
+    "@types/node": "^22.10.5",
     "@types/react": "^19.0.4",
     "@types/react-dom": "^19.0.2",
     "parcel": "^2.13.3",
