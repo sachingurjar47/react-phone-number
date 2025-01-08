@@ -35,10 +35,10 @@ export const Default = () => {
         onChange={onChange}
       /> */}
       <PhoneNumber
-        value={valueObj}
-        onChangeNumber={onChangeNumber}
-        onChangeCountry={onChangeCountry}
-        onChange={onChange}
+      // value={valueObj}
+      // onChangeNumber={onChangeNumber}
+      // onChangeCountry={onChangeCountry}
+      // onChange={onChange}
       />
     </>
   );
