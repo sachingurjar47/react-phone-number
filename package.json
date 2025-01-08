@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
+    "@parcel/bundler-library": "^2.13.3",
     "@parcel/packager-ts": "^2.13.3",
     "@parcel/transformer-typescript-types": "^2.13.3",
     "@storybook/addon-essentials": "^8.4.7",
