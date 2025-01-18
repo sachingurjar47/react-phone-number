@@ -17,6 +17,17 @@ export const getCountries = ({ local }: GetCountriesProps = {}): Country[] => {
     };
   });
 
+  // Sort the countries array by the 'title' property
+  countries?.sort((a, b) => {
+    if (a?.title < b?.title) {
+      return -1;
+    }
+    if (a?.title > b?.title) {
+      return 1;
+    }
+    return 0;
+  });
+
   return countries ?? [];
 };
 

@@ -28,17 +28,17 @@ export const Default = () => {
 
   return (
     <>
-      {/* <PhoneNumber
+      <PhoneNumber
         value={value}
         onChangeNumber={onChangeNumber}
         onChangeCountry={onChangeCountry}
         onChange={onChange}
-      /> */}
+      />
       <PhoneNumber
-      // value={valueObj}
-      // onChangeNumber={onChangeNumber}
-      // onChangeCountry={onChangeCountry}
-      // onChange={onChange}
+        value={valueObj}
+        onChangeNumber={onChangeNumber}
+        onChangeCountry={onChangeCountry}
+        onChange={onChange}
       />
     </>
   );
