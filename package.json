@@ -1,6 +1,6 @@
 {
   "name": "reactjs-phone-number",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": false,
   "source": "src/index.ts",
   "main": "dist/main.js",
