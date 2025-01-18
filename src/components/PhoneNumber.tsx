@@ -54,7 +54,6 @@ const PhoneNumber: React.FC<Props> = ({ local, ...rest }) => {
       );
     }
   }, []);
-  console.log(getCountries());
 
   return (
     <Input

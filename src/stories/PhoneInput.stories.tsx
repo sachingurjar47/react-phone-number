@@ -21,7 +21,6 @@ export const Default = () => {
     // console.log("onChangeNumber", n);
   };
   const onChange = (e: any, j: any) => {
-    console.log("onChange", e, j);
     typeof e === "string" ? setValue(e) : setValueObj(e);
   };
   // console.log(valueObj);

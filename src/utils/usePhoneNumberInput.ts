@@ -8,16 +8,38 @@ import {
 import { getCountry } from "../countries";
 
 interface PropsString {
+  name: string;
   value?: string;
-  onChange?: (value: PropsString["value"], obj?: PropsObject["value"]) => void;
+  onChange?: (
+    e?:
+      | (Record<string, any> & {
+          target: {
+            name?: string;
+            value: PropsString["value"];
+            obj?: PropsObject["value"];
+          };
+        })
+      | any
+  ) => void;
   onChangeNumber?: (number: string) => void;
   onChangeCountry?: (country: CountryCode, code: string) => void;
   defaultCountry?: CountryCode;
 }
 
 export interface PropsObject {
+  name: string;
   value?: Omit<Country, "icon" | "title"> & { number?: string };
-  onChange?: (value: PropsObject["value"], str?: PropsString["value"]) => void;
+  onChange?: (
+    e?:
+      | (Record<string, any> & {
+          target: {
+            name?: string;
+            value: PropsObject["value"];
+            str?: PropsString["value"];
+          };
+        })
+      | any
+  ) => void;
   onChangeNumber?: (number: string) => void;
   onChangeCountry?: (country: CountryCode, code: string) => void;
   defaultCountry?: CountryCode;
@@ -48,6 +70,7 @@ type ReturnValue<T extends UsePhoneNumberInputProps> = T extends PropsString
 
 const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
   {
+    name,
     value,
     defaultCountry = "US",
     onChange,
@@ -66,7 +89,6 @@ const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
       asYouType.input(typeof value === "string" ? value : value?.number ?? ""),
     [value, asYouType]
   );
-  console.log(asYouType);
 
   const phoneNumber = useMemo(() => asYouType.getNumber(), [asYouType]);
   // @ts-ignore
@@ -104,15 +126,15 @@ const usePhoneNumberInput = <T extends UsePhoneNumberInputProps>(
   ) => {
     const callingCode = getCountryCallingCode(newCountry!) as string;
     onChangeCountryProps?.(newCountry!, callingCode);
-    onChange?.(
-      // @ts-ignore
+
+    const newTargetValue =
       typeof value === "string"
         ? valueForString!
-        : { country: newCountry, callingCode, number },
-      typeof value === "string"
-        ? { country: newCountry, callingCode, number }
-        : valueForString
-    );
+        : { country: newCountry, callingCode, number };
+    const obj = { country: newCountry, callingCode, number };
+    const str = valueForString;
+    // @ts-ignore
+    onChange?.({ target: { name, value: newTargetValue, obj, str } });
   };
 
   const onChangeCountry = (country: CountryCode) => {
